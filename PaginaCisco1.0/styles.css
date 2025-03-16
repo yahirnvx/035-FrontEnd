@@ -45,8 +45,8 @@ nav ul li a {
 }
 
 .hero img {
-    max-width: 100%; /* Asegura que la imagen no se desborde en pantallas pequeñas */
-    height: auto; /* Mantiene la proporción */
+    max-width: 100%; 
+    height: auto; 
 }
 
 .btn {
@@ -62,10 +62,9 @@ nav ul li a {
     padding: 20px;
 }
 
-/* Estilos para pantallas pequeñas */
 .grid {
     display: flex;
-    flex-direction: column;  /* Los artículos se apilan uno debajo del otro en pantallas pequeñas */
+    flex-direction: column;  
     gap: 10px;
 }
 
@@ -76,11 +75,10 @@ article {
 }
 
 article img {
-    max-width: 100%;  /* Asegura que las imágenes no se desborden */
+    max-width: 100%;  
     height: auto;
 }
 
-/* Estilos para pantallas de 768px o mayores (tabletas y computadoras de escritorio) */
 @media (min-width: 768px) {
     nav {
         flex-direction: row;
@@ -95,23 +93,52 @@ article img {
 
     .grid {
         display: grid;
-        grid-template-columns: repeat(2, 1fr); /* Dos columnas en pantallas medianas */
+        grid-template-columns: repeat(2, 1fr); 
         gap: 20px;
     }
 
     .hero img {
-        width: 50%;  /* Ajusta el tamaño de la imagen en pantallas medianas */
+        width: 50%;  
         margin: 0 auto;
     }
 }
 
-/* Estilos para pantallas de 1024px o mayores (escritorios y pantallas grandes) */
 @media (min-width: 1024px) {
     .grid {
-        grid-template-columns: repeat(4, 1fr); /* Cuatro columnas en pantallas grandes */
+        grid-template-columns: repeat(4, 1fr); 
     }
 
     .hero {
         padding: 80px 40px;
+    }
+}
+
+#menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    #menu-toggle {
+        display: block;
+    }
+
+    nav ul {
+        display: none;
+        flex-direction: column;
+        background-color: white;
+        position: absolute;
+        top: 50px;
+        left: 0;
+        width: 100%;
+        padding: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    nav ul.activo {
+        display: flex;
     }
 }
