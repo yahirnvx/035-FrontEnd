@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tecladom</title>
+    <style>
+
+        body {
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .teclado {
+            display: flex;
+            gap: 10px;
+        }
+
+        .tecla {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid lightblue;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .tecla:active {
+            background-color: yellow;
+            color: black;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div class="teclado">
+        <div class="tecla" data-note="A">A</div>
+        <div class="tecla" data-note="S">S</div>
+        <div class="tecla" data-note="D">D</div>
+        <div class="tecla" data-note="F">F</div>
+        <div class="tecla" data-note="G">G</div>
+        <div class="tecla" data-note="H">H</div>
+        <div class="tecla" data-note="J">J</div>
+        <div class="tecla" data-note="K">K</div>
+        <div class="tecla" data-note="L">L</div>
+    </div>
+
+    <script>
+        const sonidos = {
+            A: "sonidos/boom.wav",
+            S: "sonidos/clap.wav",
+            D: "sonidos/hihat.wav",
+            F: "sonidos/kick.wav",
+            G: "sonidos/openhat.wav",
+            H: "sonidos/ride.wav",
+            J: "sonidos/snare.wav",
+            K: "sonidos/tink.wav",
+            L: "sonidos/tom.wav"
+        };
+
+        function playSound(note) {
+            if (sonidos[note]) {
+                const audio = new Audio(sonidos[note]);
+                audio.play();
+            }
+        }
+
+        document.querySelectorAll('.tecla').forEach(tecla => {
+            tecla.addEventListener('click', () => {
+                playSound(tecla.dataset.note);
+            });
+        });
+
+        document.addEventListener('keydown', (event) => {
+            const key = event.key.toUpperCase();
+            if (sonidos[key]) {
+                playSound(key);
+            }
+        });
+    </script>
+
+</body>
+</html>
