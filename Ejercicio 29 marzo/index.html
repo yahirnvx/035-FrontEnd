@@ -37,12 +37,26 @@
             background-color: yellow;
             color: black;
         }
+
+        canvas {
+            width: 100%;
+            max-width: 800px;
+            height: 200px;
+            background: #111;
+            border: 1px solid lightblue;
+        }
+
     </style>
 </head>
 
 
 <body>
+
+    <canvas id="visualizer"></canvas>
+
     <div class="teclado">
+
+
         <div class="tecla" data-note="A">A</div>
         <div class="tecla" data-note="S">S</div>
         <div class="tecla" data-note="D">D</div>
@@ -52,6 +66,8 @@
         <div class="tecla" data-note="J">J</div>
         <div class="tecla" data-note="K">K</div>
         <div class="tecla" data-note="L">L</div>
+
+
     </div>
 
     <script>
@@ -66,6 +82,7 @@
             K: "sonidos/tink.wav",
             L: "sonidos/tom.wav"
         };
+
 
         function playSound(note) {
             if (sonidos[note]) {
@@ -86,7 +103,50 @@
                 playSound(key);
             }
         });
+
+    //Visualizador
+
+        const canvas = document.getElementById('visualizer');
+        const ctx = canvas.getContext('2d');
+        
+    
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const analyser = audioContext.createAnalyser();
+        analyser.fftSize = 256; 
+        const bufferLength = analyser.frequencyBinCount;
+        const dataArray = new Uint8Array(bufferLength);
+    
+
+        function drawVisualizer() {
+            requestAnimationFrame(drawVisualizer);
+    
+            analyser.getByteFrequencyData(dataArray);
+    
+            ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+            const barWidth = (canvas.width / bufferLength) * 2.5;
+            let x = 0;
+    
+            for (let i = 0; i < bufferLength; i++) {
+                const barHeight = dataArray[i] / 2;
+    
+                ctx.fillStyle = `rgb(${barHeight + 100}, 50, 150)`;
+                ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+    
+                x += barWidth + 1;
+            }
+        }
+    
+        drawVisualizer();
+
+     
+
+
     </script>
+
+
+    
 
 </body>
 </html>
