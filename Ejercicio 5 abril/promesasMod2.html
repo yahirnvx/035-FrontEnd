@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hamburguesas</title>
+  <style>
+    #respuesta {
+      background-color: #ccc;
+      margin-top: 20px;
+      padding: 10px;
+      display: none; 
+    }
+
+    button, input[type="text"] {
+      margin-right: 10px;
+      padding: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <div>
+    <label for="ingredient">Agregar ingrediente:</label>
+    <input type="text" id="ingredient" placeholder="Ingrediente" />
+    <button id="btnAdd">Agregar</button>
+    <button id="btnComplete">Completar pedido</button>
+  </div>
+
+  <div id="respuesta"></div>
+
+  <script src="promesasMod2.js"></script>
+
+  <script>
+    const ingredientesSeleccionados = [];
+
+    document.getElementById('btnAdd').addEventListener('click', function() {
+      const ingredienteInput = document.getElementById('ingredient');
+      const ingrediente = ingredienteInput.value.trim();
+
+      if (!ingrediente) return;
+
+      ordenarHamburguesa([ingrediente])
+        .then(function(mensajeExito) {
+          document.getElementById('respuesta').style.display = 'block';
+          document.getElementById('respuesta').innerHTML = `
+            <p>${mensajeExito} ✔</p>
+            <img src="https://www.cocinadelirante.com/sites/default/files/images/2024/06/hamburguesa-con-tocino.jpg" alt="Ingrediente disponible" />
+          `;
+          ingredientesSeleccionados.push(ingrediente);
+        })
+        .catch(function(error) {
+          document.getElementById('respuesta').style.display = 'block';
+          document.getElementById('respuesta').innerHTML = `
+            <p>${error}</p>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNXy4E_qTGbC6OvvaBHk0H5cSqhX-0jE1R8Q&s" alt="Ingrediente no disponible" />
+          `;
+        });
+
+      ingredienteInput.value = '';
+    });
+
+    document.getElementById('btnComplete').addEventListener('click', function() {
+      if (ingredientesSeleccionados.length > 0) {
+        alert(`Pedido completado con los ingredientes: ${ingredientesSeleccionados.join(', ')}`);
+      } else {
+        alert('No hay ingredientes agregados o disponibles para completar el pedido.');
+      }
+    });
+  </script>
+
+</body>
+</html>
