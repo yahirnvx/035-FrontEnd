@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>JSONPlaceholder</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 6px 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Posts</h1>
+
+
+  <div>
+    <input type="text" id="titulo">
+    <textarea id="contenido" rows="4"></textarea>
+    <button onclick="crearPost()">Crear Post</button>
+  </div>
+
+  
+
+  <table id="tablaPosts">
+    <thead>
+      <tr>
+        <th>Título</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const urlAPI = 'https://jsonplaceholder.typicode.com/posts';
+    let posts = [];
+
+
+    window.onload = () => {
+      fetch(urlAPI)
+        .then(res => res.json())
+        .then(data => {
+          posts = data.slice(0, 5);
+          mostrarPosts();
+        });
+    };
+
+
+    function mostrarPosts() {
+      const tbody = document.querySelector('#tablaPosts tbody');
+      tbody.innerHTML = '';
+      posts.forEach(post => {
+        const fila = document.createElement('tr');
+        fila.innerHTML = `
+          <td>${post.title}</td>
+          <td><button onclick="eliminarPost(${post.id})">Eliminar</button></td>
+        `;
+        tbody.appendChild(fila);
+      });
+    }
+
+
+    function crearPost() {
+      const titulo = document.getElementById('titulo').value;
+      const contenido = document.getElementById('contenido').value;
+
+      if (!titulo || !contenido) {
+        alert('Los Campos estan incompletos');
+        return;
+      }
+
+      fetch(urlAPI, {
+        method: 'POST',
+        body: JSON.stringify({
+          title: titulo,
+          body: contenido,
+          userId: 1
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8'
+        }
+      })
+      .then(res => res.json())
+      .then(nuevoPost => {
+
+        posts.unshift(nuevoPost);
+        mostrarPosts();
+        alert('Post creado');
+      });
+    }
+
+
+    function eliminarPost(id) {
+      fetch(`${urlAPI}/${id}`, {
+        method: 'DELETE'
+      })
+      .then(() => {
+
+        posts = posts.filter(post => post.id !== id);
+        mostrarPosts();
+        alert('Post eliminado');
+      });
+    }
+  </script>
+</body>
+</html>

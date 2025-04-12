@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>OpenWeather</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 500px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+    }
+    #resultado {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+    .error {
+      color: red;
+    }
+    input {
+      padding: 5px;
+      width: 70%;
+    }
+    button {
+      padding: 6px 12px;
+      margin-left: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Clima</h1>
+  <p>
+    Ciudad:
+    <input type="text" id="ciudadInput">
+    <button onclick="consultarClima()">Buscar</button>
+  </p>
+
+  <div id="resultado"></div>
+
+  <script>
+    const apiKey = 'b89c09db02b3328d27b2c26ebc9624ab'; // ← Reemplaza esto por tu API Key real
+
+   
+
+    function consultarClima() {
+      const ciudad = document.getElementById('ciudadInput').value;
+      if (ciudad) {
+        obtenerClima(ciudad);
+      }
+    }
+
+    function obtenerClima(ciudad) {
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(ciudad)}&appid=${apiKey}&units=metric&lang=es`;
+
+      fetch(url)
+        .then(respuesta => {
+          if (!respuesta.ok) {
+            if (respuesta.status === 400) {
+              throw new Error('Error 400: Solicitud incorrecta. Verifica el nombre de la ciudad.');
+            } else if (respuesta.status === 404) {
+              throw new Error('Ciudad no encontrada.');
+            } else {
+              throw new Error('Ocurrió un error al consultar el clima.');
+            }
+          }
+          return respuesta.json();
+        })
+        .then(data => {
+          const clima = data.weather[0].description;
+          const temp = data.main.temp;
+          document.getElementById('resultado').innerHTML = `
+            <h2>${data.name}</h2>
+            <p>Clima: ${clima}</p>
+            <p>Temperatura: ${temp}°C</p>
+          `;
+        })
+        .catch(error => {
+          document.getElementById('resultado').innerHTML = `<p class="error">${error.message}</p>`;
+        });
+    }
+  </script>
+</body>
+</html>
