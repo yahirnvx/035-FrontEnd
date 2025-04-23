@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Fitness</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+
+</head>
+<body>
+  <div class="hero">
+    <button class="boton">Iniciar sesión</button>
+    <img src="logo.png" class="logo">
+    <h1 class="titulo">Fitness</h1>
+
+      <div class="spotify-card">
+        <div class="spotify-header">
+          <img src="spotify-icon.png" class="spotify-icon">
+          <span>Reproduciendo Ahora</span>
+
+          <button id="playAudio" class="flecha">➤</button>
+
+        </div>
+    
+        <div class="spotify-body">
+          <img src="album.jpg" alt="Album" class="album-cover">
+          <div class="track-info">
+          <strong>This Is Me</strong>
+          <p>Zeds Dead</p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <audio id="miAudio">
+        <source src="ThisIsMe.mp3" type="audio/mpeg">
+      </audio>
+      
+      <script>
+        const botonAudio = document.getElementById("playAudio");
+        const audio = document.getElementById("miAudio");
+
+        botonAudio.addEventListener("click", () => {
+          if (audio.paused) {
+            audio.play();
+            botonAudio.textContent = "⏸️";
+          } else {
+            audio.pause();
+            botonAudio.textContent = "➤";
+          }
+        });
+      
+        const actividades = [
+          {
+            tiempo: '90min',
+            titulo: 'Soccer',
+            descripcion: 'Duración: 90 minutos por sesión. Frecuencia: 3 veces por semana (durante 2 semanas). Descripción: Partido rápido de fútbol 5 contra 5. Cada sesión incluye 10 minutos de calentamiento, 35 minutos por mitad, con un descanso de 10 minutos entre mitades. Ideal para mejorar resistencia, reflejos y trabajo en equipo.',
+            img: 'soccer.jpg'
+          },
+          {
+            tiempo: '30min',
+            titulo: 'Tennis',
+            descripcion: 'Duración: 30 minutos por sesión. Frecuencia: 5 días seguidos. Descripción: Duelo individual 1 contra 1. Se alternan sets cortos con descansos activos de 2 minutos entre cada uno. Sesiones enfocadas en coordinación, técnica de saque y desplazamiento lateral. Ideal como cardio técnico.',
+            img: 'tennis.jpg'
+          },
+          {
+            tiempo: '45min',
+            titulo: 'Pilates',
+            descripcion: 'Rutina enfocada en fuerza central y control corporal. Sesión de 45 minutos. Frecuencia de 4 días a la semana durante 3 semanas. Comienza con 5 minutos de respiración guiada, 35 minutos de ejercicios de bajo impacto, y 5 minutos de estiramientos, no se requiere descanso intermedio.',
+            img: 'pilates.png'
+          },
+          {
+            tiempo: '40min',
+            titulo: 'Flexiones',
+            descripcion: 'Reto progresivo. Duración de 40 minutos por sesión. Frecuencia de 5 días. Día 1: 5 series de 10 flexiones (descanso de 1 min entre series) Día 5: hasta 10 series de 15 flexiones. Se incluye un pequeño calentamiento y estiramiento post-rutina. Ideal para desarrollar fuerza de tren superior y resistencia muscular.',
+            img: 'flexiones.jpg'
+          },
+          {
+            tiempo: '60min',
+            titulo: 'Running',
+            descripcion: 'Duración: 60 minutos por sesión. Frecuencia: 3 días a la semana, durante 4 semanas. Descripción: Combinación de trote y carrera moderada: 10 min calentamiento caminando, 40 min running continuo o con intervalos. 10 min de estiramientos. Mejora cardiovascular y control del ritmo.',
+            img: 'running.jpeg'
+          },
+          {
+            tiempo: '50min',
+            titulo: 'Yoga',
+            descripcion: 'Duración: 50 minutos por sesión. Frecuencia: 5 días a la semana, durante 2 semanas. Descripción: Sesión guiada en exteriores, 10 min respiración y enfoque mental, 30 min de posturas con enfoque en flexibilidad y balance, 10 min de meditación guiada. Descanso suave entre posiciones. Reto ideal para cuerpo y mente.',
+            img: 'yoga.jpg'
+          }
+        ];
+      
+        function abrirModal(index) {
+          const data = actividades[index];
+          document.getElementById("modalTiempo").textContent = data.tiempo;
+          document.getElementById("modalTitulo").textContent = data.titulo;
+          document.getElementById("modalDescripcion").textContent = data.descripcion;
+          document.getElementById("modalImg").src = data.img;
+      
+          const modal = document.getElementById("modal");
+          modal.classList.add("show");
+        }
+      
+        function cerrarModal() {
+          const modal = document.getElementById("modal");
+          modal.classList.remove("show");
+        }
+      </script>
+      
+     
+
+  </div>
+
+
+  <section class="actividad-grid">
+    <div class="tarjeta t1x2" onclick="abrirModal(0)">
+      <img src="soccer.jpg" alt="">
+      <span class="tiempo">90min</span>
+      <h3>Soccer</h3>
+      <p>5 contra 5</p>
+    </div>
+  
+    <div class="tarjeta t2x2" onclick="abrirModal(1)">
+      <img src="tennis.jpg" alt="">
+      <span class="tiempo">30min</span>
+      <h3>Tennis</h3>
+      <p>1 contra 1</p>
+    </div>
+  
+    <div class="tarjeta t2x2" onclick="abrirModal(2)">
+      <img src="pilates.png" alt="">
+      <span class="tiempo">45min</span>
+      <h3>Pilates</h3>
+      <p>Rutina individual</p>
+    </div>
+  
+    <div class="tarjeta t1x1" onclick="abrirModal(3)">
+      <img src="flexiones.jpg" alt="">
+      <span class="tiempo">40min</span>
+      <h3>Flexiones</h3>
+      <p>Ejercicio brazo</p>
+    </div>
+  
+    <div class="tarjeta t1x1" onclick="abrirModal(4)">
+      <img src="running.jpeg" alt="">
+      <span class="tiempo">60min</span>
+      <h3>Running</h3>
+      <p>Individual o grupo</p>
+    </div>
+  
+    <div class="tarjeta t3x2" onclick="abrirModal(5)">
+      <img src="yoga.jpg" alt="">
+      <span class="tiempo">50min</span>
+      <h3>Yoga</h3>
+      <p>Al aire libre</p>
+    </div>
+  </section>
+  
+  <!-- Modal dinámico -->
+  <div id="modal" class="modal">
+    <div class="modal-contenido">
+      <div class="info">
+        <span class="tiempo" id="modalTiempo"></span>
+        <h3 id="modalTitulo"></h3>
+        <p id="modalDescripcion"></p>
+        <button class="accion">Iniciar reto</button>
+        <button class="accion">Invitar a un amigo</button>
+      </div>
+      <div class="imagen">
+        <img id="modalImg" src="" alt="">
+        <button class="cerrar" onclick="cerrarModal()">X</button>
+      </div>
+    </div>
+  </div>
+  
+  
+
+
+
+
+
+
+</body>
+</html>
