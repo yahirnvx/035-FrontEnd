@@ -1,0 +1,32 @@
+.nav-link {
+  color: #140d0a;
+  text-decoration: none;
+  font-family: 'Raleway', sans-serif;
+  font-size: clamp(0.7rem, 2vw, 1rem);
+  transition: color 0.3s ease;
+  position: relative;
+  font-weight: bold;
+}
+
+.nav-link:hover {
+  color: #fad8a5;
+}
+
+.nav-link:active {
+  color: #fff0dc;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: #fad8a5;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}

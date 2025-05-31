@@ -1,0 +1,24 @@
+.ver-menu-btn {
+  padding: 10px 20px;
+  background-color: #fdf6ed;
+  color: #140d0a;
+  border: none;
+  border-radius: 50px;
+  font-weight: bold;
+  font-family: 'Raleway', sans-serif;
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ver-menu-btn:hover {
+  background-color: #fad8a5;
+  color: #35221b;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.ver-menu-btn:active {
+  background-color: #eac093;
+  color: #ffffff;
+}
